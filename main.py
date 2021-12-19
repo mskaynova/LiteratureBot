@@ -36,18 +36,29 @@ def get_name(message):
     
 @bot.callback_query_handler(func=lambda call: True)
 def callback_worker(call):
+    '''
+    Функция дает возмжность пользователю показать свою готовность к началу теста
+    '''
     if call.data == "yes":
         bot.send_message(call.message.chat.id, 'напиши /test')
         bot.register_next_step_handler(call.message, test)
     elif call.data == "no":
         bot.send_message(call.message.chat.id, 'очень жаль( отправь любое сообщение, чтобы начать снова')
+        
 def test(message):
+    '''
+    Функция, дающая команду к началу теста
+    '''
     if message.text == '/test':
         bot.send_message(message.from_user.id, random.choice(q1))
         bot.register_next_step_handler(message, answer1)
     else:
         bot.send_message(message.from_user.id, 'Попробуй еще раз, напиши /test')
+        
 def answer1(message):
+    '''
+    Функция дает реакцию на ответ пользователя на первый вопрос, прибавляет балл к общему результату в случае правильного ответа
+    '''
     if message.text == 'Лермонтов':
         bot.send_message(message.from_user.id, 'Молодец, правильно')
         bot.send_message(message.from_user.id, random.choice(q2))
@@ -58,7 +69,11 @@ def answer1(message):
         bot.send_message(message.from_user.id, 'Неправильно(')
         bot.send_message(message.from_user.id, random.choice(q2))
         bot.register_next_step_handler(message, answer2)
+        
 def answer2(message):
+    '''
+    Функция дает реакцию на ответ пользователя на второй вопрос, прибавляет балл к общему результату в случае правильного ответа
+    '''
     if message.text == 'Пушкин':
         bot.send_message(message.from_user.id, 'Молодец, правильно')
         bot.send_message(message.from_user.id, random.choice(q3))
@@ -69,7 +84,11 @@ def answer2(message):
         bot.send_message(message.from_user.id, 'Неправильно(')
         bot.send_message(message.from_user.id, random.choice(q3))
         bot.register_next_step_handler(message, answer3)
+        
 def answer3(message):
+    '''
+    Функция дает реакцию на ответ пользователя на третий вопрос, прибавляет балл к общему результату в случае правильного ответа
+    '''
     if message.text == 'Гоголь':
         bot.send_message(message.from_user.id, 'Молодец, правильно')
         bot.send_message(message.from_user.id, random.choice(q4))
@@ -80,7 +99,11 @@ def answer3(message):
         bot.send_message(message.from_user.id, 'Неправильно(')
         bot.send_message(message.from_user.id, random.choice(q4))
         bot.register_next_step_handler(message, answer4)
+        
 def answer4(message):
+    '''
+    Функция дает реакцию на ответ пользователя на четвертый вопрос, прибавляет балл к общему результату в случае правильного ответа
+    '''
     if message.text == 'Булгаков':
         bot.send_message(message.from_user.id, 'Молодец, правильно')
         bot.send_message(message.from_user.id, random.choice(q5))
@@ -91,7 +114,11 @@ def answer4(message):
         bot.send_message(message.from_user.id, 'Неправильно(')
         bot.send_message(message.from_user.id, random.choice(q5))
         bot.register_next_step_handler(message, answer5)
+        
 def answer5(message):
+    '''
+    Функция дает реакцию на ответ пользователя на пятый вопрос, прибавляет балл к общему результату в случае правильного ответа
+    '''
     if message.text == 'Достоевский':
         bot.send_message(message.from_user.id, 'Молодец, правильно')
         bot.send_sticker(message.chat.id, 'CAACAgIAAxkBAAEDhQZhv2pmBG6FYXgdAYx3hh8KikxE4AACBgkAAhlWig6zGNC4EmXBqCME')
@@ -103,7 +130,11 @@ def answer5(message):
         bot.send_sticker(message.chat.id, 'CAACAgIAAxkBAAEDhQZhv2pmBG6FYXgdAYx3hh8KikxE4AACBgkAAhlWig6zGNC4EmXBqCME')
         bot.send_message(message.from_user.id, 'Наипиши понравился ли тебе тест, чтобы продолжить')
         bot.register_next_step_handler(message, result)
+        
 def result(message):
+    '''
+    Функция, объявляющая результаты теста
+    '''
     if count == 5:
         bot.send_message(message.from_user.id, 'Поздравляю ты ответил(а) на все вопросы правильно!!')
     if count == 4:
