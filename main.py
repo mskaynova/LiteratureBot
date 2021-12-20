@@ -161,4 +161,5 @@ def start(message):
     else:
         bot.send_message(message.from_user.id, 'Попробуй еще раз, напиши /starttest')
         
-bot.infinity_polling()
+if __name__=='__main__':        
+    bot.infinity_polling()
